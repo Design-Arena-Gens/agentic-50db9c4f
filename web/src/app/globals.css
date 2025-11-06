@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+  --background: #03010f;
+  --foreground: #f5f6ff;
+  --grid-line: rgba(19, 245, 255, 0.08);
+  --glow-primary: #ff2d95;
+  --glow-secondary: #13f5ff;
+  --glow-ambient: #7a5cff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #03010f;
+    --foreground: #f5f6ff;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-transparent;
+  }
+
+  body {
+    @apply min-h-screen antialiased text-foreground bg-background;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255, 45, 149, 0.16), transparent 45%),
+      radial-gradient(circle at 80% 10%, rgba(19, 245, 255, 0.18), transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(122, 92, 255, 0.12), transparent 55%),
+      linear-gradient(135deg, rgba(3, 1, 15, 0.65), rgba(3, 1, 30, 0.9));
+    font-family: var(--font-geist-sans);
+  }
+}
+
+@layer utilities {
+  .holo-grid {
+    position: relative;
+  }
+
+  .holo-grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(0deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.8), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .neon-border {
+    position: relative;
+    border: 1px solid rgba(19, 245, 255, 0.08);
+    border-radius: 28px;
+    box-shadow:
+      0 0 24px rgba(255, 45, 149, 0.18),
+      0 0 52px rgba(19, 245, 255, 0.14);
+  }
+
+  .neon-border::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 45, 149, 0.3),
+      rgba(19, 245, 255, 0.3)
+    );
+    opacity: 0.15;
+    filter: blur(18px);
+    z-index: -1;
+  }
+
+  .matrix-flow {
+    background: linear-gradient(
+        120deg,
+        rgba(255, 45, 149, 0.12),
+        rgba(19, 245, 255, 0.12) 55%,
+        rgba(122, 92, 255, 0.2)
+      )
+      rgba(6, 1, 30, 0.82);
+    backdrop-filter: blur(22px);
+  }
+
+  .scanlines {
+    position: relative;
+  }
+
+  .scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    opacity: 0.3;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 22px rgba(255, 45, 149, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 38px rgba(19, 245, 255, 0.5));
+  }
+}
